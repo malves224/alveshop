@@ -1,26 +1,12 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '../config';
+import Wallet from './wallet';
 
 class User extends Model {
-  id!: number;
-
-  id_waller!: number;
-
-  name!: string;
-
-  email!: string;
-
-  password!: string;
-
-  role!: string;
 }
 
 User.init(
   {
-    id_wallet: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -44,5 +30,8 @@ User.init(
     timestamps: false,
   },
 );
+
+Wallet.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+User.hasOne(Wallet, { foreignKey: 'user_id', as: 'wallet' });
 
 export default User;
