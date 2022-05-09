@@ -3,6 +3,7 @@ import { IUser } from '../interfaces/user';
 import { ServiceComplete } from '../interfaces/services';
 import Wallet from '../database/models/wallet';
 import CryptographicModule from '../auth/CryptographicModule';
+import { IDataToken } from '../interfaces/TokenUser';
 
 export default class UserService implements ServiceComplete<IUser, User> {
   constructor(
@@ -44,11 +45,30 @@ export default class UserService implements ServiceComplete<IUser, User> {
     );
   }
 
-  update(idUser: string, user: IUser): Promise<User> {
-    // verificar role do token
-    // se role for adm alterar qualquer user
-    // se nao, verificar se id do user é o mesmo do idUserToAlter
-    throw new Error('Method not implemented.');
+  async updateAdmin(idUser: string | number, user: IUser) {
+    const { name, password, email } = user;
+    return this.model.update(
+      { name, password, email },
+      { where: { id: idUser } },
+    );
+  }
+
+  async update(
+    idUser: string | number, 
+    user: IUser, 
+    tokenInfo: IDataToken,
+  ) {
+    if (tokenInfo.role === 'admin') {
+      return this.updateAdmin(idUser, user);
+    }
+    if (+idUser !== tokenInfo.id) {
+      throw new Error('Não autorizado.');
+    }
+    const { name, password, email } = user;
+    return this.model.update(
+      { name, password, email },
+      { where: { id: idUser } },
+    );
   }
 
   delete(id: string | number): Promise<void> {
@@ -63,7 +83,3 @@ export default class UserService implements ServiceComplete<IUser, User> {
     throw new Error('Method not implemented.');
   }
 }
-
-new UserService()
-  .create({ name: 'testes', email: 'teastae', password: '123456', role: '' })
-  .then((res) => console.log(res));
