@@ -18,6 +18,14 @@ export default class UserService implements ServiceComplete<IUser, User> {
     } 
   }
 
+  async checkIfPasswordValid(password: string, hash: string) {
+    const isValid = await this
+      .cryptographicModule.checkPasswordHash(password, hash);
+    if (!isValid) {
+      throw new Error('Senha inválida.');
+    }
+  }
+
   async create({ name, email, password }: IUser): Promise<User> {
     await this.checkIfUserExist(email);
     const hashPassword = await this.cryptographicModule.generateHash(password);
@@ -36,7 +44,10 @@ export default class UserService implements ServiceComplete<IUser, User> {
     );
   }
 
-  update(id: string | number, obj: IUser): Promise<User> {
+  update(idUser: string, user: IUser): Promise<User> {
+    // verificar role do token
+    // se role for adm alterar qualquer user
+    // se nao, verificar se id do user é o mesmo do idUserToAlter
     throw new Error('Method not implemented.');
   }
 
