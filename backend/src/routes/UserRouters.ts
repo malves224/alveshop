@@ -11,13 +11,20 @@ const userRouter = Router();
 
 userRouter.post(`${route}/login`, (req, res) => userController.login(req, res));
 
-userRouter.use([authorizationController.requireAuth]);
+userRouter.use([authorizationController.checkUserToken]);
 
-userRouter
-  .get(route, (req, res) => userController.findAll(req, res))
+userRouter.get(route, (req, res) => userController.findAll(req, res))
   .get(routeId, (req, res) => userController.findOne(req, res))
   .post(route, (req, res) => userController.create(req, res))
-  .put(routeId, (req, res) => userController.update(req, res))
-  .delete(routeId, (req, res) => userController.delete(req, res));
+  .put(
+    routeId, 
+    AuthorizationController.checkIfUserIsAdmin,
+    (req, res) => userController.update(req, res),
+  )
+  .delete(
+    routeId, 
+    AuthorizationController.checkIfUserIsAdmin,
+    (req, res) => userController.delete(req, res),
+  );
 
 export default userRouter;
