@@ -1,12 +1,12 @@
 import md5 from 'md5';
 import User from '../database/models/users';
 import { IUser } from '../interfaces/user';
-import { ServiceComplete } from '../interfaces/services';
+import { ServiceWithAuth } from '../interfaces/services';
 import Wallet from '../database/models/wallet';
-import { IDataToken } from '../interfaces/TokenUser';
+import { IDataToken } from '../interfaces/tokenUser';
 import Jwt from '../auth/Jwt';
 
-export default class UserService implements ServiceComplete<IUser, User> {
+export default class UserService implements ServiceWithAuth<IUser, User> {
   constructor(
     public model = User,
     public modelAssociate = Wallet,

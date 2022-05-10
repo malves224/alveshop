@@ -1,4 +1,4 @@
-import { IDataToken } from './TokenUser';
+import { IDataToken } from './tokenUser';
 
 export interface ServiceConsult<TM> {
   findOne(id: string | number): Promise<TM>,
@@ -16,6 +16,10 @@ export interface ServiceComplete<T, TM> extends ServiceConsult<TM> {
 
   delete(id: string | number, tokenInfo: IDataToken): Promise<void>
 
+}
+
+export interface ServiceWithAuth<T, TM> extends ServiceComplete<T, TM> {
+  authentication(email: string, password: string): Promise<{ token: string }>
 }
 
 export interface ServiceWallet<T, TM> extends ServiceConsult<TM> {
