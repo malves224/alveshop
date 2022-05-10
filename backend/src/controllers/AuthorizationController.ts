@@ -26,10 +26,10 @@ class AuthorizationController {
   ) => {
     const { id: idUserAuth, role } = req.body.tokenInfo;
     const { id: idFromRouter } = req.params;
-    if (role !== 'admin' && +idFromRouter !== idUserAuth) {
+    if (role !== 'adm' && +idFromRouter !== idUserAuth) {
       return res.status(401).json({ message: 'Não autorizado.' });
-    }
-    next();
+    } 
+    next(); 
   };
 }
 
