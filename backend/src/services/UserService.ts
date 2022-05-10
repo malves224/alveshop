@@ -1,15 +1,16 @@
+import md5 from 'md5';
 import User from '../database/models/users';
 import { IUser } from '../interfaces/user';
 import { ServiceComplete } from '../interfaces/services';
 import Wallet from '../database/models/wallet';
-import CryptographicModule from '../auth/CryptographicModule';
 import { IDataToken } from '../interfaces/TokenUser';
+import Jwt from '../auth/Jwt';
 
 export default class UserService implements ServiceComplete<IUser, User> {
   constructor(
     public model = User,
     public modelAssociate = Wallet,
-    public cryptographicModule = new CryptographicModule(),
+    public jwt = new Jwt(),
   ) {}
 
   async checkIfUserExist(email: string) {
@@ -19,21 +20,12 @@ export default class UserService implements ServiceComplete<IUser, User> {
     } 
   }
 
-  async checkIfPasswordValid(password: string, hash: string) {
-    const isValid = await this
-      .cryptographicModule.checkPasswordHash(password, hash);
-    if (!isValid) {
-      throw new Error('Senha inválida.');
-    }
-  }
-
   async create({ name, email, password }: IUser): Promise<User> {
     await this.checkIfUserExist(email);
-    const hashPassword = await this.cryptographicModule.generateHash(password);
     const objCreate = {
       name,
       email,
-      password: hashPassword,
+      password: md5(password),
       role: 'customer',
       wallet: {
         coins: 0.00,
@@ -48,7 +40,7 @@ export default class UserService implements ServiceComplete<IUser, User> {
   async updateAdmin(idUser: string | number, user: IUser) {
     const { name, password, email } = user;
     return this.model.update(
-      { name, password, email },
+      { name, password: md5(password), email },
       { where: { id: idUser } },
     );
   }
@@ -66,7 +58,7 @@ export default class UserService implements ServiceComplete<IUser, User> {
     }
     const { name, password, email } = user;
     return this.model.update(
-      { name, password, email },
+      { name, password: md5(password), email },
       { where: { id: idUser } },
     );
   }
