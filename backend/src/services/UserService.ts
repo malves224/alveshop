@@ -20,6 +20,17 @@ export default class UserService implements ServiceComplete<IUser, User> {
     } 
   }
 
+  async authentication(email: string, password: string) {
+    const user = await this.model
+      .findOne({ where: { email, password: md5(password) } });
+    if (!user) {
+      throw new Error('Email ou senha inválido.');
+    }
+    const { id, role, email: emailUser } = user;
+    const token = this.jwt.generateToken({ id, role, email: emailUser });
+    return { token };
+  }
+
   async create({ name, email, password }: IUser): Promise<User> {
     await this.checkIfUserExist(email);
     const objCreate = {
