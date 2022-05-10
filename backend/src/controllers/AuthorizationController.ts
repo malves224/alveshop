@@ -11,7 +11,8 @@ class AuthorizationController {
     }
 
     try {
-      await this.jwt.validate(authorization);
+      const tokenInfo = await this.jwt.validate(authorization);
+      req.body.tokenInfo = tokenInfo;
       next();
     } catch (error) {
       return res.status(401).json({ message: 'Token invalido ou vencido.' });
