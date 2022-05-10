@@ -7,7 +7,7 @@ class User extends Model {
 
 User.init(
   {
-    status: {
+    active: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
