@@ -14,7 +14,7 @@ export interface ServiceComplete<T, TM> extends ServiceConsult<TM> {
   update(id: string | number, obj: T, tokenInfo: IDataToken): 
   Promise<[number, TM[]]>,
 
-  delete(id: string | number): Promise<void>
+  delete(id: string | number, tokenInfo: IDataToken): Promise<void>
 
 }
 

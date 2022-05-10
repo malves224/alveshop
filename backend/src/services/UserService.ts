@@ -34,7 +34,7 @@ export default class UserService implements ServiceComplete<IUser, User> {
       name,
       email,
       password: hashPassword,
-      role: 'client',
+      role: 'customer',
       wallet: {
         coins: 0.00,
       },
@@ -71,8 +71,15 @@ export default class UserService implements ServiceComplete<IUser, User> {
     );
   }
 
-  delete(id: string | number): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(idUser: string | number, tokenInfo: IDataToken): Promise<void> {
+    if (tokenInfo.role === 'admin') {
+      await this.model.destroy({ where: { id: idUser } });
+      return;
+    }
+    if (+idUser !== tokenInfo.id) {
+      throw new Error('Não autorizado.');
+    }
+    await this.model.update({ status: false }, { where: { id: idUser } });
   }
 
   findOne(id: string | number): Promise<User> {
