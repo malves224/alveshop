@@ -1,5 +1,3 @@
-import { IDataToken } from './tokenUser';
-
 export interface ServiceConsult<TM> {
   findOne(id: string | number): Promise<TM>,
 
@@ -12,10 +10,10 @@ export interface ServiceComplete<T, TM> extends ServiceConsult<TM> {
   create(obj: T): 
   Promise<{ idUser: number | string, message: string }>,
 
-  update(id: string | number, obj: T, tokenInfo: IDataToken): 
+  update(id: string | number, obj: T): 
   Promise<[number, TM[]]>,
 
-  delete(id: string | number, tokenInfo: IDataToken): Promise<void>
+  delete(id: string | number): Promise<void>
 
 }
 

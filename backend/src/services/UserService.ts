@@ -3,7 +3,6 @@ import User from '../database/models/users';
 import { IUser } from '../interfaces/user';
 import { ServiceWithAuth } from '../interfaces/services';
 import Wallet from '../database/models/wallet';
-import { IDataToken } from '../interfaces/tokenUser';
 import Jwt from '../auth/Jwt';
 
 export default class UserService implements ServiceWithAuth<IUser, User> {
@@ -62,15 +61,8 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
   async update(
     idUser: string | number, 
     user: IUser, 
-    tokenInfo: IDataToken,
   ) {
     await this.checkIfUserExist(user.email);
-    if (tokenInfo.role === 'admin') {
-      return this.updateAdmin(idUser, user);
-    }
-    if (+idUser !== tokenInfo.id) {
-      throw new Error('Não autorizado.');
-    }
     const { name, password, email } = user;
     return this.model.update(
       { name, password: md5(password), email },
@@ -78,14 +70,7 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
     );
   }
 
-  async delete(idUser: string | number, tokenInfo: IDataToken): Promise<void> {
-    if (tokenInfo.role === 'admin') {
-      await this.model.destroy({ where: { id: idUser } });
-      return;
-    }
-    if (+idUser !== tokenInfo.id) {
-      throw new Error('Não autorizado.');
-    }
+  async delete(idUser: string | number): Promise<void> {
     await this.model.update({ active: false }, { where: { id: idUser } });
   }
 

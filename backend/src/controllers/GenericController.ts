@@ -34,7 +34,7 @@ class GenericController<T, TM> {
 
   async update(req: Request, res: Response) {
     try {
-      await this.service.update(req.params.id, req.body, req.body.tokenInfo);
+      await this.service.update(req.params.id, req.body);
       return res.status(200).json({ message: 'Atualizado com sucesso.' });
     } catch (error) {
       const { message } = error as Error;
@@ -44,7 +44,7 @@ class GenericController<T, TM> {
 
   async delete(req: Request, res: Response): Promise<void | typeof res> {
     try {
-      await this.service.delete(req.params.id, req.body.tokenInfo);
+      await this.service.delete(req.params.id);
       return res.status(200).json({ message: 'Deletado com sucesso.' });
     } catch (error) {
       const { message } = error as Error;
