@@ -79,14 +79,18 @@ export default class UserService implements ServiceComplete<IUser, User> {
     if (+idUser !== tokenInfo.id) {
       throw new Error('Não autorizado.');
     }
-    await this.model.update({ status: false }, { where: { id: idUser } });
+    await this.model.update({ active: false }, { where: { id: idUser } });
   }
 
-  findOne(id: string | number): Promise<User> {
-    throw new Error('Method not implemented.');
+  async findOne(id: string | number) {
+    const user = await this.model.findOne({ where: { id } });
+    if (!user) {
+      throw new Error('Usuario não encontrado.');
+    }
+    return user;
   }
 
   findAll(): Promise<User[]> {
-    throw new Error('Method not implemented.');
+    return this.model.findAll();
   }
 }
