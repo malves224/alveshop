@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import { IDataToken } from '../interfaces/TokenUser';
+import { IDataToken } from '../interfaces/tokenUser';
 
 const secret = process.env.JWT_SECRET as jwt.Secret;
 
@@ -19,7 +19,7 @@ export default class Jwt {
     }
   }
 
-  async generateToken(data: IDataToken) {
+  generateToken(data: IDataToken) {
     const token = this.tokenModule.sign(data, this.secretKey, {
       expiresIn: '1d',
       algorithm: 'HS256',
