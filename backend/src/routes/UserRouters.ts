@@ -9,13 +9,14 @@ const { route } = userController;
 const routeId = `${route}/:id`;
 const userRouter = Router();
 
-userRouter.post(`${route}/login`, (req, res) => userController.login(req, res));
+userRouter
+  .post(`${route}/login`, (req, res) => userController.login(req, res))
+  .post(route, (req, res) => userController.create(req, res));
 
 userRouter.use([authorizationController.checkUserToken]);
 
 userRouter.get(route, (req, res) => userController.findAll(req, res))
   .get(routeId, (req, res) => userController.findOne(req, res))
-  .post(route, (req, res) => userController.create(req, res))
   .put(
     routeId, 
     AuthorizationController.checkIfUserIsAdmin,
