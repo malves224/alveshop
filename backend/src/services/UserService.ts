@@ -64,6 +64,7 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
     user: IUser, 
     tokenInfo: IDataToken,
   ) {
+    await this.checkIfUserExist(user.email);
     if (tokenInfo.role === 'admin') {
       return this.updateAdmin(idUser, user);
     }
