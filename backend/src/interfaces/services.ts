@@ -9,7 +9,8 @@ export interface ServiceConsult<TM> {
 
 export interface ServiceComplete<T, TM> extends ServiceConsult<TM> {
 
-  create(obj: T): Promise<TM>,
+  create(obj: T): 
+  Promise<{ idUser: number | string, message: string }>,
 
   update(id: string | number, obj: T, tokenInfo: IDataToken): 
   Promise<[number, TM[]]>,

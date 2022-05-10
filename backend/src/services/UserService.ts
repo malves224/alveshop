@@ -31,9 +31,9 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
     return { token };
   }
 
-  async create({ name, email, password }: IUser): Promise<User> {
+  async create({ name, email, password }: IUser) {
     await this.checkIfUserExist(email);
-    const objCreate = {
+    const objCreate = { active: true,
       name,
       email,
       password: md5(password),
@@ -42,10 +42,13 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
         coins: 0.00,
       },
     };
-    return this.model.create(
-      objCreate,
-      { include: { model: this.modelAssociate, as: 'wallet' } },
-    );
+    try {
+      const userCreated = await this.model.create(objCreate, { 
+        include: { model: this.modelAssociate, as: 'wallet' },
+      });
+      return { idUser: userCreated.id,
+        message: 'Usuario criado com sucesso.' };
+    } catch (error) { throw new Error('Falha inesperada.'); }
   }
 
   async updateAdmin(idUser: string | number, user: IUser) {
@@ -86,7 +89,12 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
   }
 
   async findOne(id: string | number) {
-    const user = await this.model.findOne({ where: { id } });
+    const user = await this.model.findOne(
+      { 
+        where: { id },
+        attributes: { exclude: ['password'] }, 
+      },
+    );
     if (!user) {
       throw new Error('Usuario não encontrado.');
     }
@@ -94,6 +102,7 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
   }
 
   findAll(): Promise<User[]> {
-    return this.model.findAll();
+    return this.model
+      .findAll({ attributes: { exclude: ['password'] } });
   }
 }
