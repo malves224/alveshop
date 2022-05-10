@@ -7,6 +7,10 @@ class User extends Model {
 
 User.init(
   {
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
