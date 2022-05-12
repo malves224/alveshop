@@ -1,7 +1,7 @@
 export interface ServiceConsult<TM> {
   findOne(id: string | number): Promise<TM>,
 
-  findAll(objTerm?: { [x: string]: string | number }): Promise<TM[]>
+  findAll(objTerm?: { [x: string]: string | undefined }): Promise<TM[]>
 
 }
 

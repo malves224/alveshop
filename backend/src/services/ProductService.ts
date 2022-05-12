@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { ServiceComplete } from '../interfaces/services';
 import Products from '../database/models/products';
 import { IProduct } from '../interfaces/product';
@@ -52,9 +53,25 @@ class ProductService implements ServiceComplete<IProduct, Products> {
     return product;
   }
 
-  findAll(): Promise<Products[]> {
+  findAll(objTerm: { [x: string]: string | undefined }): Promise<Products[]> {
+    const priceBetween = [
+      parseFloat(objTerm.priceLessThan as string),
+      parseFloat(objTerm.priceGreaterThan as string),
+    ];
+    const nameForSearch = !objTerm.name ? '' : objTerm.name;
+    const priceWhereSequelize = priceBetween.every((value) => value) && {
+      price: { [Op.between]: priceBetween },
+    };
+    const activeSearch = objTerm.active && {
+      active: objTerm.active === 'true',
+    };
     return this.model
-      .findAll();
+      .findAll({ 
+        where: { name: { [Op.like]: `%${nameForSearch}%` },
+          ...activeSearch,
+          ...priceWhereSequelize,
+        },
+      });
   }
 }
 
