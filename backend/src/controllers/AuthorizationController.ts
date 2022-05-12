@@ -34,7 +34,19 @@ class AuthorizationController {
     }
   };
 
-  static checkIfUserIsAdmin = async (
+  static checkIfUserAdmin = (
+    req: Request, 
+    res: Response, 
+    next: NextFunction,
+  ) => {
+    const { role } = req.body.tokenInfo;
+    if (role !== 'adm') {
+      return res.status(401).json({ message: 'Não autorizado.' });
+    } 
+    next(); 
+  };
+
+  static checkAuthorshipObject = (
     req: Request, 
     res: Response, 
     next: NextFunction,
