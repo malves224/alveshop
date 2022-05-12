@@ -17,13 +17,12 @@ Products.init(
   {
     active: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    url_image: {
+    urlImage: {
       type: DataTypes.STRING,
       allowNull: false,
     },
