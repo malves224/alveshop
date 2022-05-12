@@ -24,7 +24,8 @@ class UserSchema {
 
   schema = Joi.object({
     name: Joi.string().min(3).required().messages(this.typeMessage.name),
-    email: Joi.string().pattern(/\S+@\S+\.\S+/)
+    email: Joi.string()
+      .pattern(/^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/)
       .required().messages(this.typeMessage.email),
     password: Joi.string().min(6).required()
       .messages(this.typeMessage.password),
