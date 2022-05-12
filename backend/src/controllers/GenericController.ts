@@ -1,11 +1,21 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { ServiceWithAuth } from '../interfaces/services';
+import UserSchema from '../schemas/SchemaUser';
 
 class GenericController<T, TM> {
   constructor(
     public route: string,
     public service: ServiceWithAuth<T, TM>,
+    public schema: UserSchema['schema'],
   ) {}
+
+  validationsSchema = (req: Request, res: Response, next: NextFunction) => {
+    const { error } = this.schema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: error?.details[0].message });
+    }
+    return next();
+  };
 
   async findAll(_req: Request, res: Response<TM[]>) {
     const list = await this.service.findAll();

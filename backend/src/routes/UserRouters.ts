@@ -5,23 +5,28 @@ import UserController from '../controllers/UserController';
 const userController = new UserController('/user');
 const authorizationController = new AuthorizationController();
 
-const { route } = userController;
+const { route, validationsSchema } = userController;
 const routeId = `${route}/:id`;
 const userRouter = Router();
 
 userRouter
   .post(`${route}/login`, (req, res) => userController.login(req, res))
-  .post(route, (req, res) => userController.create(req, res));
+  .post(
+    route, 
+    validationsSchema,
+    (req, res) => userController.create(req, res),
+  ).put(
+    routeId,
+    validationsSchema,
+    authorizationController.checkUserToken,
+    AuthorizationController.checkIfUserIsAdmin,
+    (req, res) => userController.update(req, res),
+  );
 
 userRouter.use([authorizationController.checkUserToken]);
 
 userRouter.get(route, (req, res) => userController.findAll(req, res))
   .get(routeId, (req, res) => userController.findOne(req, res))
-  .put(
-    routeId, 
-    AuthorizationController.checkIfUserIsAdmin,
-    (req, res) => userController.update(req, res),
-  )
   .delete(
     routeId, 
     AuthorizationController.checkIfUserIsAdmin,
