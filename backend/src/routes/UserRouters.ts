@@ -15,21 +15,25 @@ userRouter
     route, 
     validationsSchema,
     (req, res) => userController.create(req, res),
-  ).put(
+  )
+  .put(
     routeId,
     validationsSchema,
     authorizationController.checkUserToken,
-    AuthorizationController.checkIfUserIsAdmin,
+    AuthorizationController.checkAuthorshipObject,
     (req, res) => userController.update(req, res),
   );
 
-userRouter.use([authorizationController.checkUserToken]);
-
 userRouter.get(route, (req, res) => userController.findAll(req, res))
-  .get(routeId, (req, res) => userController.findOne(req, res))
+  .get(
+    routeId, 
+    authorizationController.checkUserToken,
+    (req, res) => userController.findOne(req, res),
+  )
   .delete(
     routeId, 
-    AuthorizationController.checkIfUserIsAdmin,
+    authorizationController.checkUserToken,
+    AuthorizationController.checkAuthorshipObject,
     (req, res) => userController.delete(req, res),
   );
 
