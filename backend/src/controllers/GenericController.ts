@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { ServiceWithAuth } from '../interfaces/services';
+import { ServiceComplete } from '../interfaces/services';
 import UserSchema from '../schemas/SchemaUser';
 
 class GenericController<T, TM> {
   constructor(
     public route: string,
-    public service: ServiceWithAuth<T, TM>,
+    public service: ServiceComplete<T, TM>,
     public schema: UserSchema['schema'],
   ) {}
 

@@ -1,24 +1,20 @@
 export interface ServiceConsult<TM> {
   findOne(id: string | number): Promise<TM>,
 
-  findAll(): Promise<TM[]>
+  findAll(objTerm?: { [x: string]: string | number }): Promise<TM[]>
 
 }
 
 export interface ServiceComplete<T, TM> extends ServiceConsult<TM> {
 
   create(obj: T): 
-  Promise<{ idUser: number | string, message: string }>,
+  Promise<{ [x: string]: number | string, message: string }>,
 
   update(id: string | number, obj: T): 
   Promise<[number, TM[]]>,
 
   delete(id: string | number): Promise<void>
 
-}
-
-export interface ServiceWithAuth<T, TM> extends ServiceComplete<T, TM> {
-  authentication(email: string, password: string): Promise<{ token: string }>
 }
 
 export interface ServiceWallet<T, TM> extends ServiceConsult<TM> {

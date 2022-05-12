@@ -10,7 +10,7 @@ const routeId = `${route}/:id`;
 const userRouter = Router();
 
 userRouter
-  .post(`${route}/login`, (req, res) => userController.login(req, res))
+  .post(`${route}/login`, (req, res) => authorizationController.login(req, res))
   .post(
     route, 
     validationsSchema,

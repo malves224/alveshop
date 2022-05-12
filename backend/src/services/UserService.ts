@@ -1,11 +1,11 @@
 import md5 from 'md5';
 import User from '../database/models/users';
 import { IUser } from '../interfaces/user';
-import { ServiceWithAuth } from '../interfaces/services';
 import Wallet from '../database/models/wallet';
 import Jwt from '../auth/Jwt';
+import { ServiceComplete } from '../interfaces/services';
 
-export default class UserService implements ServiceWithAuth<IUser, User> {
+export default class UserService implements ServiceComplete<IUser, User> {
   constructor(
     public model = User,
     public modelAssociate = Wallet,
@@ -48,14 +48,6 @@ export default class UserService implements ServiceWithAuth<IUser, User> {
       return { idUser: userCreated.id,
         message: 'Usuario criado com sucesso.' };
     } catch (error) { throw new Error('Falha inesperada.'); }
-  }
-
-  async updateAdmin(idUser: string | number, user: IUser) {
-    const { name, password, email } = user;
-    return this.model.update(
-      { name, password: md5(password), email },
-      { where: { id: idUser } },
-    );
   }
 
   async update(
