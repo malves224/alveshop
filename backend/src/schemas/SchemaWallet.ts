@@ -11,7 +11,7 @@ class WalletSchema {
   };
 
   schema = Joi.object({
-    price: Joi.number().required().positive()
+    coins: Joi.number().required().positive()
       .messages(this.typeMessage.coins), 
   });
 }
