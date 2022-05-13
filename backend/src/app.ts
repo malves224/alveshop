@@ -16,7 +16,7 @@ class App {
     );
   }
 
-  public addRouter(router: Router) {
+  public addRouter(router: Router | Router[]) {
     this.app.use(router);
   }
 }
