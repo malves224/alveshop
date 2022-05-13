@@ -13,7 +13,7 @@ Wallet.init(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
