@@ -15,13 +15,18 @@ class ProductController extends GenericController<IProduct, Products> {
   }
 
   async findAll(req: Request, res: Response) {
-    const { name, priceGreaterThan, priceLessThan, active } = req.query;
+    const { 
+      name, 
+      priceGreaterThan, 
+      priceLessThan, 
+      active } = req.query as { [x: string]: string };
+      
     const list = await this.service
       .findAll({ 
-        name: name as string, 
-        priceGreaterThan: priceGreaterThan as string, 
-        priceLessThan: priceLessThan as string,
-        active: active as string,
+        name, 
+        priceGreaterThan, 
+        priceLessThan,
+        active,
       });
     return res.status(200).json(list);
   }
