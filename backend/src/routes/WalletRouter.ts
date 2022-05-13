@@ -12,13 +12,13 @@ walletRouter
   .get(
     routeId,
     authorizationController.checkUserToken,
-    AuthorizationController.checkIfUserAdmin,  
+    AuthorizationController.checkAuthorshipObject,  
     (req, res) => walletController.findOne(req, res),
   )
   .get(
     route, 
     authorizationController.checkUserToken,
-    AuthorizationController.checkAuthorshipObject,
+    AuthorizationController.checkIfUserAdmin,
     (req, res) => walletController.findAll(req, res),
   )
   .put(
