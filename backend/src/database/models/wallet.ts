@@ -2,15 +2,18 @@ import { Model, DataTypes } from 'sequelize';
 import db from '../config';
 
 class Wallet extends Model {
+  coins!: number;
+
+  userId!: number;
 }
 
 Wallet.init(
   {
     coins: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

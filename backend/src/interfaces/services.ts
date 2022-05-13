@@ -18,9 +18,11 @@ export interface ServiceComplete<T, TM> extends ServiceConsult<TM> {
 }
 
 export interface ServiceWallet<T, TM> extends ServiceConsult<TM> {
-  update(id: string | number, obj: T): Promise<TM>,
-  increment(id: string | number, coin: number | string): Promise<TM>,
-  decrement(id: string | number, coin: number | string): Promise<TM>,
+  update(id: string | number, obj: T): Promise<[number, TM[]]>,
+  incrementCoins(id: string | number, coin: number | string)
+  : Promise<[number, TM[]]>,
+  decrementCoins(id: string | number, coin: number | string)
+  : Promise<[number, TM[]]>,
 }
 
 export interface ServiceSearch<T, TM, TS> extends ServiceComplete<T, TM> {
