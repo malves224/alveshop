@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import AuthorizationController from '../controllers/AuthorizationController';
 import UserController from '../controllers/UserController';
+import WalletController from '../controllers/WalletController';
 
 const userController = new UserController('/user');
+const walletController = new WalletController();
 const authorizationController = new AuthorizationController();
 
 const { route, validationsSchema } = userController;
@@ -24,7 +26,13 @@ userRouter
     (req, res) => userController.update(req, res),
   );
 
-userRouter.get(route, (req, res) => userController.findAll(req, res))
+userRouter
+  .get(
+    route,
+    authorizationController.checkUserToken,
+    AuthorizationController.checkIfUserAdmin,
+    (req, res) => userController.findAll(req, res),
+  )
   .get(
     routeId, 
     authorizationController.checkUserToken,
@@ -35,6 +43,11 @@ userRouter.get(route, (req, res) => userController.findAll(req, res))
     authorizationController.checkUserToken,
     AuthorizationController.checkAuthorshipObject,
     (req, res) => userController.delete(req, res),
+  )
+  .post(
+    `${route}/sale`,
+    authorizationController.checkUserToken,
+    (req, res) => walletController.purchase(req, res),
   );
 
 export default userRouter;

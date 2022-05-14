@@ -4,7 +4,6 @@ import WalletService from '../services/WalletService';
 
 class WalletController {
   constructor(
-    public route: string,
     private service = new WalletService(),
     public schema = new WalletSchema().schema,
   ) {}
@@ -16,6 +15,18 @@ class WalletController {
     }
     return next();
   };
+
+  async purchase(req: Request, res: Response) {
+    try {
+      const { idProduct, quantity, tokenInfo: { id: userId } } = req.body;
+      const response = await this
+        .service.purchase({ idProduct, quantity }, userId);
+      return res.status(201).json(response);
+    } catch (error) {
+      const { message } = error as Error;
+      return res.status(401).json({ message });
+    }
+  }
 
   async findAll(_req: Request, res: Response) {
     const list = await this.service.findAll();

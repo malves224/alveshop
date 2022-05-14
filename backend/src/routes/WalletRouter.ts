@@ -2,9 +2,10 @@ import { Router } from 'express';
 import AuthorizationController from '../controllers/AuthorizationController';
 import WalletController from '../controllers/WalletController';
 
-const walletController = new WalletController('/wallet');
+const walletController = new WalletController();
 const authorizationController = new AuthorizationController();
-const { route, validationsSchema } = walletController;
+const { validationsSchema } = walletController;
+const route = '/wallet';
 const routeId = `${route}/:id`;
 const walletRouter = Router();
 
