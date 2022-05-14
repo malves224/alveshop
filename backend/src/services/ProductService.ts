@@ -15,6 +15,18 @@ class ProductService implements ServiceComplete<IProduct, Products> {
     } 
   }
 
+  async checkIfProductIsActive(
+    id: string | number,
+    options = { isReturn: false },
+  ) {
+    const product = await this.model.findOne({ where: { id } });
+    if (!product || !product.active) {
+      throw new Error('Produto indisponivel.');
+    } if (options.isReturn) {
+      return product;
+    }
+  }
+
   async create(obj: IProduct) {
     try {
       const productCreate = await this.model.create(obj);
