@@ -1,3 +1,5 @@
+import { IProductSale } from './product';
+
 export interface ServiceConsult<TM> {
   findOne(id: string | number): Promise<TM>,
 
@@ -23,8 +25,12 @@ export interface ServiceWallet<T, TM> extends ServiceConsult<TM> {
   : Promise<[number, TM[]]>,
   decrementCoins(id: string | number, coin: number | string)
   : Promise<[number, TM[]]>,
-}
+  purchase(
+    item: IProductSale,
+    userId: string | number
+  ): Promise<{
+    message: string;
+    newBalance: number;
+  }>
 
-export interface ServiceSearch<T, TM, TS> extends ServiceComplete<T, TM> {
-  findAllSearch(termsSearch: TS): Promise<TM[]>
 }
