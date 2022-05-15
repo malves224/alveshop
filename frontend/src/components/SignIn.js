@@ -1,5 +1,6 @@
 import { Container, TextField, Button } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import productsDataContext from '../context/Context';
 import requestApi from '../utils/api';
 import storage from '../utils/storage';
@@ -12,10 +13,13 @@ function SignIn() {
   const [loading, setLoading] = useState(false);
   const { setAlertGlobal } = useContext(productsDataContext);
   const token = storage.get('token');
+  const history = useHistory();
 
-  if (token) {
-    console.log('redirect home page');
-  }
+  useEffect(() => {
+    if (token) {
+      history.replace('/');
+    }
+  }, []);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -34,9 +38,12 @@ function SignIn() {
         severity: 'error',
         value: response.message,
       });
+      setLoading(false);
+      return;
     }
     storage.set('token', response.token);
     setLoading(false);
+    history.replace('/');
   };
 
   const { email, password } = dataLogin;
