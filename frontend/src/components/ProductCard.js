@@ -1,8 +1,27 @@
 import { Box, Button } from '@mui/material';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import ModalGeneric from './ModalGeneric';
+import CardConfirmationBuy from './CardConfirmationBuy';
+import storage from '../utils/storage';
+import productsDataContext from '../context/Context';
 
 function ProductCard({ itemProduct }) {
+  const [modalIsOpenBuy, setModalIsOpenBuy] = useState(false);
+  const { setAlertGlobal } = useContext(productsDataContext);
+
+  const handleClickSale = () => {
+    const token = storage.get('token');
+    if (!token) {
+      setAlertGlobal({
+        open: true,
+        severity: 'info',
+        value: 'Por favor faço o login para comprar algo.' });
+      return;
+    }
+    setModalIsOpenBuy(true);
+  };
+
   return (
     <Box
       sx={ {
@@ -11,6 +30,15 @@ function ProductCard({ itemProduct }) {
         height: '390px',
       } }
     >
+      <ModalGeneric
+        sx={ { padding: '10px', height: '420px' } }
+        stateForOpen={ [modalIsOpenBuy, setModalIsOpenBuy] }
+      >
+        <CardConfirmationBuy
+          closeModel={ () => setModalIsOpenBuy(false) }
+          itemProduct={ itemProduct }
+        />
+      </ModalGeneric>
       <img
         alt="imagem do produto"
         width="100%"
@@ -35,6 +63,7 @@ function ProductCard({ itemProduct }) {
         <Button
           color="error"
           variant="contained"
+          onClick={ handleClickSale }
           disabled={ !itemProduct.active }
         >
           {itemProduct.active ? 'Comprar' : 'Indisponivel' }
