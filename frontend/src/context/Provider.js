@@ -13,6 +13,16 @@ const INITIAL_STATE_PRODUCTS = [{
 
 function DataProvider({ children }) {
   const [products, setProducts] = useState(INITIAL_STATE_PRODUCTS);
+  const [alertGlobal, setAlertGlobal] = useState({
+    value: '', severity: 'error', open: false,
+  });
+
+  const setOpenAlert = (bool) => {
+    setAlertGlobal({
+      ...alertGlobal,
+      open: bool,
+    });
+  };
 
   useEffect(() => {
     requestApi('/product', 'GET')
@@ -26,7 +36,10 @@ function DataProvider({ children }) {
   const valueProps = useMemo(() => ({
     products,
     setProducts,
-  }), [products]);
+    setAlertGlobal,
+    alertGlobal,
+    setOpenAlert,
+  }), [products, setOpenAlert]);
 
   return (
     <productsDataContext.Provider
