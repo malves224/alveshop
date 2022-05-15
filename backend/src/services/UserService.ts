@@ -25,9 +25,9 @@ export default class UserService implements ServiceComplete<IUser, User> {
     if (!user) {
       throw new Error('Email ou senha inválido.');
     }
-    const { id, role, email: emailUser } = user;
+    const { id, role, email: emailUser, name } = user;
     const token = this.jwt.generateToken({ id, role, email: emailUser });
-    return { token };
+    return { token, id, email: emailUser, name };
   }
 
   async create({ name, email, password }: IUser) {
