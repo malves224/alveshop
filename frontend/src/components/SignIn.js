@@ -12,11 +12,11 @@ function SignIn() {
   });
   const [loading, setLoading] = useState(false);
   const { setAlertGlobal } = useContext(productsDataContext);
-  const token = storage.get('token');
+  const userData = storage.get('user');
   const history = useHistory();
 
   useEffect(() => {
-    if (token) {
+    if (userData) {
       history.replace('/');
     }
   }, []);
@@ -41,7 +41,7 @@ function SignIn() {
       setLoading(false);
       return;
     }
-    storage.set('token', response.token);
+    storage.set('user', response);
     setLoading(false);
     history.replace('/');
   };

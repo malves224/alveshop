@@ -11,7 +11,7 @@ function ProductCard({ itemProduct }) {
   const { setAlertGlobal } = useContext(productsDataContext);
 
   const handleClickSale = () => {
-    const token = storage.get('token');
+    const token = storage.get('user');
     if (!token) {
       setAlertGlobal({
         open: true,
