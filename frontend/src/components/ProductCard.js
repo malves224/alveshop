@@ -29,7 +29,7 @@ function ProductCard({ itemProduct }) {
           {itemProduct.name}
         </p>
         <p style={ { color: '#66bb6a' } }>
-          <p>Preço: </p>
+          <span>Preço: </span>
           {itemProduct.price}
         </p>
         <Button
@@ -45,11 +45,12 @@ function ProductCard({ itemProduct }) {
 }
 
 ProductCard.propTypes = {
-  itemProduct: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.boolean,
-  ])).isRequired,
+  itemProduct: PropTypes.shape({
+    active: PropTypes.bool,
+    urlImage: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.string,
+  }).isRequired,
 };
 
 export default ProductCard;
