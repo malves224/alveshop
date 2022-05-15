@@ -88,7 +88,7 @@
           ],
           "max-lines-per-function": [
             "error",
-            25
+            250
           ],
           "complexity": [
             "error",
