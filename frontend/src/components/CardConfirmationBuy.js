@@ -9,17 +9,19 @@ import storage from '../utils/storage';
 
 function CardConfirmationBuy({ itemProduct, closeModel }) {
   const [quantity, setQuantity] = useState(1);
-  const { setAlertGlobal } = useContext(productsDataContext);
+  const { setAlertGlobal, setCoinsUser } = useContext(productsDataContext);
 
   const handleConfirmation = async () => {
-    const token = storage.get('token');
+    const user = storage.get('user');
+    const endpoint = '/user/sale';
     const payload = { idProduct: itemProduct.id, quantity };
-    const response = await requestApi('/user/sale', 'POST', payload, token);
+    const response = await requestApi(endpoint, 'POST', payload, user.token);
     if (!response.newBalance) {
       setAlertGlobal({ open: true, severity: 'error', value: response.message });
       return;
     }
     setAlertGlobal({ open: true, severity: 'success', value: response.message });
+    setCoinsUser(response.newBalance);
     closeModel();
   };
 
