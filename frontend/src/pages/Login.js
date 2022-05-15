@@ -1,5 +1,6 @@
 import { Card, Container, Button } from '@mui/material';
 import React, { useState } from 'react';
+import Register from '../components/Register';
 import SignIn from '../components/SignIn';
 
 function Login() {
@@ -24,7 +25,7 @@ function Login() {
         } }
       >
         {signingUp
-          ? (<div>register</div>)
+          ? (<Register />)
           : (<SignIn />) }
         <Button
           onClick={ () => setSigningUp(!signingUp) }
