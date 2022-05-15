@@ -32,8 +32,12 @@ function ProductCard({ itemProduct }) {
           <p>Preço: </p>
           {itemProduct.price}
         </p>
-        <Button color="error" variant="contained">
-          Comprar
+        <Button
+          color="error"
+          variant="contained"
+          disabled={ !itemProduct.active }
+        >
+          {itemProduct.active ? 'Comprar' : 'Indisponivel' }
         </Button>
       </Box>
     </Box>
@@ -44,6 +48,7 @@ ProductCard.propTypes = {
   itemProduct: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.boolean,
   ])).isRequired,
 };
 
