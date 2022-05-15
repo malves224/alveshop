@@ -1,11 +1,21 @@
 import { Container, TextField, Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import productsDataContext from '../context/Context';
+import requestApi from '../utils/api';
+import storage from '../utils/storage';
 
 function SignIn() {
   const [dataLogin, setDataLogin] = useState({
     email: '',
     password: '',
   });
+  const [loading, setLoading] = useState(false);
+  const { setAlertGlobal } = useContext(productsDataContext);
+  const token = storage.get('token');
+
+  if (token) {
+    console.log('redirect home page');
+  }
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -16,7 +26,17 @@ function SignIn() {
   };
 
   const handleSignIn = async () => {
-    console.log('signIn');
+    setLoading(true);
+    const response = await requestApi('/user/login', 'POST', dataLogin);
+    if (response.message) {
+      setAlertGlobal({
+        open: true,
+        severity: 'error',
+        value: response.message,
+      });
+    }
+    storage.set('token', response.token);
+    setLoading(false);
   };
 
   const { email, password } = dataLogin;
@@ -56,10 +76,11 @@ function SignIn() {
         size="small"
       />
       <Button
+        disabled={ loading }
         onClick={ handleSignIn }
         variant="contained"
       >
-        Entrar
+        {loading ? 'aguarde..' : 'entrar'}
       </Button>
     </Container>
   );
