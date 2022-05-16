@@ -42,7 +42,7 @@ class WalletService implements ServiceWallet<IWallet, Wallet> {
 
   async update(userId: string | number, obj: IWallet) {
     await this.checkIfWalletExist(userId);
-    return this.model.update(obj, { where: { userId } });
+    return this.model.update(obj, { where: { user_id: userId } });
   }
 
   async incrementCoins(userId: string | number, coin: string | number) {
