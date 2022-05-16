@@ -1,5 +1,5 @@
 # Alveshop app (voll solutions).
-Em Alveshop app é possível pesquisar Produtos filtrar por preços, comprar utilizando "Coins",
+Em Alveshop app é possível pesquisar Produtos filtrar por preços e comprar utilizando "Coins".
 
 
 
@@ -10,10 +10,14 @@ Arquitetura POO em camadas MSC (Model Service Controller), ESlint para analise e
 Validações de schema  utilizando o framework "Joi" assim temos verificações simples como os tipos dos dados enviados, obrigatoriedade de campos, formato de email, números positivos. API retorna mensagens intuitivas caso tenha algum erro de validação de schema.
 Algumas requisições são restrita ao usuário administrador como por exemplo consultar carteira de todos usuários, adicionar saldo para alguma carteira, usuário cliente só pode visualizar seu próprio saldo, [mais detalhes sobre isso na documentação.](https://documenter.getpostman.com/view/17745625/UyxjFmBH)
 
+Deploy heroku https://alveshop-backend.herokuapp.com/
+
 ## Frontend
 
 Utilizei todo o eco sistema do React.js para criar a aplicação, Context API, React hooks e React router DOM, Como biblioteca CSS, Material UI.
 A interface do administrador não está pronta, porem o fluxo de administrador esta funcionando no backend [consulte documentação do backend.](https://documenter.getpostman.com/view/17745625/UyxjFmBH)
+
+Deploy vercel: https://alveshop.vercel.app/
 
 ## Rodando a aplicação
 
