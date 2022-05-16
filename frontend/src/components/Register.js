@@ -1,12 +1,16 @@
 import { Button, Container, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
+import productsDataContext from '../context/Context';
+import requestApi from '../utils/api';
 
-function Register() {
+function Register({ backSignIn }) {
   const [dataCadastro, setDataCadastro] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const { setAlertGlobal } = useContext(productsDataContext);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -17,7 +21,21 @@ function Register() {
   };
 
   const handleCadastrar = async () => {
-    console.log('cadastrar usuario');
+    const response = await requestApi('/user', 'POST', dataCadastro);
+    if (!response.idUser) {
+      setAlertGlobal({
+        open: true,
+        severity: 'error',
+        value: response.message,
+      });
+      return;
+    }
+    setAlertGlobal({
+      open: true,
+      severity: 'success',
+      value: response.message,
+    });
+    backSignIn();
   };
 
   return (
@@ -29,6 +47,7 @@ function Register() {
         height: '400px',
       } }
     >
+      <h2>Cadastro</h2>
       <TextField
         onChange={ handleChange }
         onCopy={ handleChange }
@@ -65,5 +84,9 @@ function Register() {
     </Container>
   );
 }
+
+Register.propTypes = {
+  backSignIn: PropTypes.func.isRequired,
+};
 
 export default Register;
