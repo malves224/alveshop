@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import productsDataContext from './Context';
 import requestApi from '../utils/api';
+import storage from '../utils/storage';
 
 const INITIAL_STATE_PRODUCTS = [{
   id: '',
@@ -16,6 +17,8 @@ function DataProvider({ children }) {
   const [alertGlobal, setAlertGlobal] = useState({
     value: '', severity: 'error', open: false,
   });
+  const userData = storage.get('user');
+  const [coinsUser, setCoinsUser] = useState(0);
 
   const setOpenAlert = (bool) => {
     setAlertGlobal({
@@ -28,6 +31,10 @@ function DataProvider({ children }) {
     requestApi('/product', 'GET')
       .then((res) => setProducts(res));
 
+    if (userData) {
+      requestApi(`/wallet/${userData.id}`, 'GET', undefined, userData.token)
+        .then((res) => setCoinsUser(res.coins));
+    }
     return () => {
       setProducts(INITIAL_STATE_PRODUCTS);
     };
@@ -37,6 +44,8 @@ function DataProvider({ children }) {
     products,
     setProducts,
     setAlertGlobal,
+    coinsUser,
+    setCoinsUser,
     alertGlobal,
     setOpenAlert,
   }), [products, setOpenAlert]);

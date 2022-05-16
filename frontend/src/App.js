@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { Login, HomePage } from './pages';
 import AlertTogle from './components/AlertTogle';
 import productsDataContext from './context/Context';
+import Navbar from './components/Navbar';
 
 const darkTheme = createTheme({
   palette: {
@@ -23,6 +24,7 @@ function App() {
       >
         {alertGlobal.value}
       </AlertTogle>
+      <Navbar />
       <Switch>
         <Route
           exact

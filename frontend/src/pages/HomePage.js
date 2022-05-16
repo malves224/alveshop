@@ -1,6 +1,5 @@
 import { Container } from '@mui/material';
 import React, { useContext } from 'react';
-import Navbar from '../components/Navbar';
 import productsDataContext from '../context/Context';
 import ProductCard from '../components/ProductCard';
 import SearchBar from '../components/SearchBar';
@@ -10,7 +9,6 @@ function HomePage() {
 
   return (
     <>
-      <Navbar />
       <SearchBar />
       <Container
         sx={ {

@@ -1,7 +1,39 @@
-import { Container, Typography, Box } from '@mui/material';
-import React from 'react';
+import { Container, Typography, Box, Button } from '@mui/material';
+import React, { useContext } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import productsDataContext from '../context/Context';
+import storage from '../utils/storage';
 
 function Navbar() {
+  const userInfo = storage.get('user');
+  const { coinsUser } = useContext(productsDataContext);
+  const history = useHistory();
+  const location = useLocation();
+
+  const handleClickExit = () => {
+    storage.remove('user');
+    history.replace('/login');
+  };
+
+  const buttonExit = () => (
+    <Button
+      onClick={ () => history.replace('/login') }
+    >
+      Fazer o login
+
+    </Button>
+  );
+
+  const infoUserLogged = () => (
+    <Box>
+      <p>
+        {userInfo.name}
+      </p>
+      <p style={ { color: 'yellow' } }>
+        {`Coins: ${coinsUser}`}
+      </p>
+    </Box>);
+
   return (
     <Container
       sx={ {
@@ -12,16 +44,15 @@ function Navbar() {
         flexDirection: 'row',
       } }
     >
-      <Typography variant="p">
+      <Typography sx={ { fontSize: '28px' } } variant="h1">
         Alveshop
       </Typography>
       {
-        // user logado, info user se nao chamada para entrar
+        userInfo
+          ? infoUserLogged()
+          : (!location.pathname.includes('login') && buttonExit())
       }
-      <Box>
-        Matheus alves
-        coins: 250
-      </Box>
+      {userInfo && <Button onClick={ handleClickExit }>Sair</Button>}
     </Container>
   );
 }
