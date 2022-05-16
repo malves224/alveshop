@@ -8,11 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      active: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: 1,
+      },
       name: {
         type: Sequelize.STRING
       },
-      url_image: {
-        type: Sequelize.STRING
+      urlImage: {
+        type: Sequelize.STRING,
+        field: 'url_image'
       },
       price: {
         type: Sequelize.DECIMAL(9,2)

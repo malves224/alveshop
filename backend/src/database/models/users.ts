@@ -3,10 +3,23 @@ import db from '../config';
 import Wallet from './wallet';
 
 class User extends Model {
+  active!: boolean;
+
+  id!: number;
+
+  role!: string;
+
+  email!: string;
+
+  password!: string;
 }
 
 User.init(
   {
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

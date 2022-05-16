@@ -6,20 +6,23 @@ class Products extends Model {
 
   name!: string;
 
-  url_image!: string;
+  active!: boolean;
 
-  password!: string;
+  url_image!: string;
 
   price!: number;
 }
 
 Products.init(
   {
+    active: {
+      type: DataTypes.BOOLEAN,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    url_image: {
+    urlImage: {
       type: DataTypes.STRING,
       allowNull: false,
     },
