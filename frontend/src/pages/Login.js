@@ -25,7 +25,7 @@ function Login() {
         } }
       >
         {signingUp
-          ? (<Register />)
+          ? (<Register backSignIn={ () => setSigningUp(!signingUp) } />)
           : (<SignIn />) }
         <Button
           onClick={ () => setSigningUp(!signingUp) }
