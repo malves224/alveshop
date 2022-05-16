@@ -9,6 +9,8 @@ class User extends Model {
 
   role!: string;
 
+  name!: string;
+
   email!: string;
 
   password!: string;

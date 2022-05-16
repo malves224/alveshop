@@ -67,8 +67,8 @@ class ProductService implements ServiceComplete<IProduct, Products> {
 
   findAll(objTerm: { [x: string]: string | undefined }): Promise<Products[]> {
     const priceBetween = [
-      parseFloat(objTerm.priceLessThan as string),
       parseFloat(objTerm.priceGreaterThan as string),
+      parseFloat(objTerm.priceLessThan as string),
     ];
     const nameForSearch = !objTerm.name ? '' : objTerm.name;
     const priceWhereSequelize = priceBetween.every((value) => value) && {
