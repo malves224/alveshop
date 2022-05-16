@@ -41,14 +41,14 @@ module.exports = {
   },
   {
     "active": true,
-    "name": "TECLADO MECANICO REDRAGON DITI ONE-HAND RGB, K585RGB",
-    "url_Image": "https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/k/5/k585rgb3.jpg",
+    "name": "TECLADO GAMER REDRAGON KARURA 2, BRANCO, K502W-N",
+    "url_Image": "https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/k/5/k502w-n7.jpg",
     "price": 4.00
   },
   {
     "active": true,
     "name": "COMPUTADOR ALVES GAMER KAGYU, AMD RYZEN 3 3200G, 8GB DDR4, SSD 240GB",
-    "url_Image": "https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/k/5/k585rgb3.jpg",
+    "url_Image": "https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/t/e/templar_intel_1650_560_1__1_7.jpg",
     "price": 24.30
   },
   {
@@ -56,6 +56,18 @@ module.exports = {
     "name": "COMPUTADOR ALVES GAMER, INTEL I7-10700KF, GEFORCE RTX 3070 TI 8GB, 16GB DDR4, SSD 960GB",
     "url_Image": "https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/s/e/seraph-e-rgb-water-rtx-006_16.jpg",
     "price": 50.30
+  },
+  {
+    "active": true,
+    "name": "HEADSET GAMER REDRAGON MENTO, RGB, DRIVERS 50MM, ROSA, H270-P",
+    "url_Image": "https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/h/2/h270-p7.jpg",
+    "price": 9.30
+  },
+  {
+    "active": true,
+    "name": "MOUSE GAMER COUGAR AIRBLADER, 16000DPI, 6 BOTOES, PRETO, CGR-WONB-410M",
+    "url_Image": "https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/c/g/cgr-wonb-410m8.jpg",
+    "price": 9.30
   },
   ]);
   },
