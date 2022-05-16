@@ -50,7 +50,7 @@ function ProductCard({ itemProduct }) {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-evenly',
-          height: '40%',
+          height: '36%',
         } }
       >
         <p>
@@ -60,15 +60,16 @@ function ProductCard({ itemProduct }) {
           <span>Preço: </span>
           {itemProduct.price}
         </p>
-        <Button
-          color="error"
-          variant="contained"
-          onClick={ handleClickSale }
-          disabled={ !itemProduct.active }
-        >
-          {itemProduct.active ? 'Comprar' : 'Indisponivel' }
-        </Button>
       </Box>
+      <Button
+        sx={ { width: '100%' } }
+        color="error"
+        variant="contained"
+        onClick={ handleClickSale }
+        disabled={ !itemProduct.active }
+      >
+        {itemProduct.active ? 'Comprar' : 'Indisponivel' }
+      </Button>
     </Box>
   );
 }
