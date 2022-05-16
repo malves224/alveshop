@@ -17,7 +17,6 @@ function DataProvider({ children }) {
   const [alertGlobal, setAlertGlobal] = useState({
     value: '', severity: 'error', open: false,
   });
-  const userData = storage.get('user');
   const [coinsUser, setCoinsUser] = useState(0);
 
   const setOpenAlert = (bool) => {
@@ -28,6 +27,8 @@ function DataProvider({ children }) {
   };
 
   useEffect(() => {
+    const userData = storage.get('user');
+
     requestApi('/product', 'GET')
       .then((res) => setProducts(res));
 
