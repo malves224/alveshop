@@ -39,7 +39,6 @@ Após terminar de montar os containers das imagens o frontend estará acessível
 Caso queira efetuar login segue os acessos: 
 
 cliente: Rogeirinho@email.com senha 654321
-administrador : adm@email.com senha 123456
 
 ## Documentação API.
 Utilizei o Postaman para gerar documentação da API segue o link:
