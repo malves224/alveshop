@@ -1,4 +1,4 @@
-# Alveshop app (voll solutions).
+# Alveshop app.
 Em Alveshop app é possível pesquisar Produtos filtrar por preços e comprar utilizando "Coins".
 
 
